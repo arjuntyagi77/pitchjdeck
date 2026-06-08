@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KuchKarlo - Investor Pitch Deck</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@700&display=swap');
+        
+        :root {
+            --bg-light: #FCFCFC;
+            --bg-white: #FFFFFF;
+            --bg-dark: #121212;
+            --text-dark: #111111;
+            --text-light: #FFFFFF;
+            --text-gray: #666666;
+            --border-light: #EBEBEB;
+            --border-dark: #333333;
+            --accent-gold: #D4AF37; 
+            --accent-gold-light: rgba(212, 175, 55, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow: hidden; 
+        }
+
+        #slider {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 2rem 4rem;
+        }
+
+        .grid-bg {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+        }
+
+        .section-dark {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+        .section-dark .slide-tag { color: var(--accent-gold); }
+        .section-dark .subtitle { color: #AAAAAA; }
+        .section-dark .stat-card {
+            background-color: #1A1A1A;
+            border-color: var(--border-dark);
+            color: var(--text-light);
+        }
+        .section-dark .stat-card p { color: #AAAAAA; }
+
+        .slide-tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .slide-tag::before { content: "— "; }
+
+        .slide-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+        .slide-title span.gold {
+            color: var(--accent-gold);
+            font-style: italic;
+        }
+        .slide-title.hero {
+            font-size: 5.5rem;
+            text-align: center;
+        }
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 1.5px #CCCCCC;
+            font-style: normal !important;
+        }
+        .section-dark .text-outline {
+            -webkit-text-stroke: 1.5px #555555;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            margin-bottom: 3rem;
+            max-width: 800px;
+        }
+        .text-center { text-align: center; margin-left: auto; margin-right: auto; }
+
+        ul { list-style-type: none; }
+        ul li {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+        .sub-bullet {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-gray);
+            margin-top: 0.5rem;
+        }
+        .section-dark .sub-bullet { color: #AAAAAA; }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; width: 100%; }
+
+        .stat-card {
+            background-color: var(--bg-white);
+            border: 1px solid var(--border-light);
+            padding: 2rem;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .stat-card h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+        .stat-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-gold-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+            align-items: center;
+        }
+        .btn-nav {
+            background: rgba(0,0,0,0.1);
+            color: var(--text-dark);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+        .btn-nav:hover { background: var(--accent-gold); color: #000; }
+        .section-dark .btn-nav { background: rgba(255,255,255,0.1); color: white; }
+        .section-dark .btn-nav:hover { background: var(--accent-gold); color: #000; }
+        
+        #progress-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-gray);
+        }
+        .section-dark #progress-text { color: #AAAAAA; }
+
+        .progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--accent-gold);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progress"></div>
+    </div>
+
+    <div id="slider">
+
+        <!-- 1. Title -->
+        <div class="slide grid-bg active">
+            <div class="container text-center">
+                <div style="font-size: 1.5rem; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 4rem;">Kuch<span style="color: var(--accent-gold);">Karlo</span></div>
+                <span style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.65rem; color: #000; background: #FFF5D1; padding: 4px 12px; border-radius: 4px; width: max-content; margin: 0 auto 2rem; border: 1px solid #F5C518; font-weight: 800; font-family: 'Inter', sans-serif; letter-spacing: 2px;">
+                    <span style="color: var(--accent-gold);">●</span> INVESTOR PITCH DECK
+                </span>
+                <h1 class="slide-title hero">One Platform.<br><span class="gold">Every</span> <span class="text-outline">Career.</span></h1>
+                <p class="subtitle text-center" style="margin-top: 2rem;">Whether you're a student in Year 1, a professional switching roles, or a company building a world-class team — KuchKarlo AI works for you.</p>
+            </div>
+        </div>
+
+        <!-- 2. The Vision -->
+        <div class="slide section-dark">
+            <div class="container text-center">
+                <span class="slide-tag" style="justify-content: center; display: flex;">THE MISSION</span>
+                <h2 class="slide-title" style="color: white; font-size: 3rem;">We are bridging the gap between <br><span class="gold">Education</span> and <span class="gold">Industry</span> using AI.</h2>
+                <p class="subtitle text-center" style="margin-top: 2rem; font-size: 1.5rem; max-width: 1000px;">The current hiring ecosystem is broken. Students don't know what to study, and companies don't know who to hire. We fix both sides simultaneously.</p>
+            </div>
+        </div>
+
+        <!-- 3. Problem Students -->
+        <div class="slide grid-bg">
+            <div class="container">
+                <span class="slide-tag">THE PROBLEM (DEMAND)</span>
+                <h2 class="slide-title">The Student <span class="gold">Struggle</span></h2>
+                <p class="subtitle">Millions of graduates enter the workforce lacking practical skills, while traditional education remains theoretical and static.</p>
+                
+                <div class="grid-3">
+                    <div class="stat-card">
+                        <div class="icon-box">📉</div>
+                        <h3>Skill Deficit</h3>
+                        <p>Students struggle to identify skill gaps and build relevant resumes for modern tech roles.</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box">😰</div>
+                        <h3>Interview Anxiety</h3>
+                        <p>Lack of practice and realistic environments lead to poor interview performance.</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box">🧭</div>
+                        <h3>No Clear Roadmap</h3>
+                        <p>Students lack structured milestones from foundation to final placement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Problem Companies -->
+        <div class="slide section-dark">
+            <div class="container">
+                <span class="slide-tag">THE PROBLEM (SUPPLY)</span>
+                <h2 class="slide-title" style="color: white;">Inefficient <span class="gold">Hiring</span></h2>
+                <p class="subtitle">Recruiters are overwhelmed by thousands of unqualified applications. Manual screening is biased, slow, and highly expensive.</p>
+                
+                <div class="grid-3">
+                    <div class="stat-card" style="padding: 3rem;">
+                        <h3 style="font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 0;">80%</h3>
+                        <p style="font-size: 1.1rem; color: white;">of recruiter time is wasted purely filtering resumes manually.</p>
+                    </div>
+                    <div class="stat-card" style="padding: 3rem;">
+                        <h3 style="font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 0;">65%</h3>
+                        <p style="font-size: 1.1rem; color: white;">drop-off rate due to lengthy traditional assessment phases.</p>
+                    </div>
+                    <div class="stat-card" style="padding: 3rem;">
+                        <h3 style="font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 0;">High</h3>
+                        <p style="font-size: 1.1rem; color: white;">discrepancy between resume claims and actual candidate capability.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Solution Overview -->
+        <div class="slide grid-bg">
+            <div class="container text-center">
+                <span class="slide-tag" style="justify-content: center; display: flex;">THE SOLUTION</span>
+                <h2 class="slide-title">KuchKarlo's <span class="gold">AI Ecosystem</span></h2>
+                <p class="subtitle text-center" style="max-width: 900px;">An end-to-end career platform uniting Job Seekers and Companies into one seamless, automated lifecycle.</p>
+                
+                <div class="grid-2" style="text-align: left; margin-top: 3rem;">
+                    <div class="stat-card" style="background: #FFF5D1; border-color: #F5C518;">
+                        <h3 style="color: #000; font-size: 1.5rem;">For Students</h3>
+                        <p style="color: #333; font-size: 1.1rem;">Gamified learning, automated mock interviews, 4-year roadmaps, and 24/7 AI counseling.</p>
+                    </div>
+                    <div class="stat-card" style="background: #111; border-color: #333;">
+                        <h3 style="color: var(--accent-gold); font-size: 1.5rem;">For Companies</h3>
+                        <p style="color: #FFF; font-size: 1.1rem;">Automated AI evaluations, instant candidate scoring, and streamlined recruiter dashboards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Student Dashboard -->
+        <div class="slide">
+            <div class="container">
+                <span class="slide-tag">FOR JOB SEEKERS</span>
+                <h2 class="slide-title">The Student <span class="gold">Hub</span></h2>
+                <p class="subtitle">A centralized career portal. Track applied jobs, access AI mock interviews, and view dynamic study plans generated to bridge specific skill gaps.</p>
+                
+                <ul>
+                    <li>Track applications and active interviews in real time.</li>
+                    <li>Instant compatibility scores for every job posted.</li>
+                    <li>One-click applying using an AI-optimized resume.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 7. Key Student Feature 1 -->
+        <div class="slide grid-bg">
+            <div class="container">
+                <span class="slide-tag">STUDENT FEATURES</span>
+                <h2 class="slide-title">AI Mock <span class="gold">Interviews</span></h2>
+                <p class="subtitle">Practice makes perfect. Our AI simulates realistic technical and behavioral interviews on demand.</p>
+                
+                <div class="grid-2">
+                    <div class="stat-card">
+                        <div class="icon-box">🎙️</div>
+                        <h3>Voice & Video Ready</h3>
+                        <p>Interact naturally. The AI evaluates tone, confidence, and correctness.</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon-box">📊</div>
+                        <h3>Instant Feedback</h3>
+                        <p>Receive detailed reports highlighting strengths and exact areas for improvement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Key Student Feature 2 -->
+        <div class="slide section-dark">
+            <div class="container">
+                <span class="slide-tag">STUDENT FEATURES</span>
+                <h2 class="slide-title" style="color: white;">4-Year <span class="gold">Roadmap</span></h2>
+                <p class="subtitle">Never feel lost. A dynamic plan that adapts as you grow from Year 1 to your first salary.</p>
+                
+                <div class="grid-2">
+                    <div class="stat-card" style="padding: 2rem;">
+                        <h3 style="color: white;">Y1: Foundation</h3>
+                        <p>Discover your niche, build habits, track skills and get a personalised learning plan.</p>
+                    </div>
+                    <div class="stat-card" style="padding: 2rem;">
+                        <h3 style="color: white;">Y2: Internships</h3>
+                        <p>CV builder, mock AI interviews, live project tracking, guided applications.</p>
+                    </div>
+                    <div class="stat-card" style="padding: 2rem;">
+                        <h3 style="color: white;">Y3: Exposure</h3>
+                        <p>Personal branding, LinkedIn, industry connections, cold-email templates.</p>
+                    </div>
+                    <div class="stat-card" style="padding: 2rem;">
+                        <h3 style="color: white;">Y4: Placement</h3>
+                        <p>AI Interviews, job offers, eligibility checks, direct placement links.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. Key Student Feature 3 -->
+        <div class="slide grid-bg">
+            <div class="container">
+                <span class="slide-tag">STUDENT FEATURES</span>
+                <h2 class="slide-title">24/7 AI <span class="gold">Mentor</span></h2>
+                <p class="subtitle">Personalized guidance based on your year, branch, and career goals.</p>
+                
+                <ul>
+                    <li>Resume Analysis Engine parses PDFs and suggests targeted improvements.</li>
+                    <li>Always available to answer technical doubts or career path questions.</li>
+                    <li>Recommends curated courses to close the gap between your skills and dream companies.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 10. Gamification -->
+        <div class="slide section-dark">
+            <div class="container text-center">
+                <span class="slide-tag" style="justify-content: center; display: flex;">ENGAGEMENT</span>
+                <h2 class="slide-title" style="color: white;">Gamified <span class="gold">Learning</span></h2>
+                <p class="subtitle text-center" style="max-width: 900px; margin-bottom: 4rem;">We solved the massive EdTech drop-off problem through incentives. Learning is now addictive.</p>
+                
+                <div class="grid-3 text-left">
+                    <div class="stat-card">
+                        <h3 style="color: white; font-size: 2rem;">🎮 XP & Coins</h3>
+                        <p>Earn XP and maintain Streaks for completing tasks. Spend coins in the virtual store.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: white; font-size: 2rem;">🏆 Leaderboards</h3>
+                        <p>Foster healthy competition among peers and universities locally and globally.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: white; font-size: 2rem;">📈 Signaling</h3>
+                        <p>High XP and long streaks signal extreme seriousness and dedication to our recruiters.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11. Recruiter Dashboard -->
+        <div class="slide">
+            <div class="container">
+                <span class="slide-tag">FOR COMPANIES</span>
+                <h2 class="slide-title">Post. Screen.<br><span class="gold">Hire Right.</span></h2>
+                <p class="subtitle">Access a verified pool of AI-assessed candidates. Post jobs, find instantly matched students, and hire with zero manual screening.</p>
+                
+                <ul>
+                    <li>Post listings live in seconds to targeted, highly-compatible students.</li>
+                    <li>View a unified dashboard tracking applicants from screening to final offer.</li>
+                    <li>Zero human intervention required until the final culture-fit interview.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 12. Recruiter Feature 1 -->
+        <div class="slide grid-bg">
+            <div class="container">
+                <span class="slide-tag">COMPANY FEATURES</span>
+                <h2 class="slide-title">Automated AI <span class="gold">Screening</span></h2>
+                <p class="subtitle">Eye-tracking, cheat detection, tab-switch lock. Zero compromise on assessment quality.</p>
+                
+                <div class="grid-2">
+                    <div class="stat-card" style="padding: 3rem;">
+                        <h3>Proctored AI Interviews</h3>
+                        <p>Deploy AI interviewers 24/7. Candidates can interview on their own schedule without HR present.</p>
+                    </div>
+                    <div class="stat-card" style="padding: 3rem;">
+                        <h3>Comprehensive Reports</h3>
+                        <p>Receive a highly detailed integrity and performance report instantly after the candidate finishes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 13. Recruiter Feature 2 -->
+        <div class="slide section-dark">
+            <div class="container">
+                <span class="slide-tag">COMPANY FEATURES</span>
+                <h2 class="slide-title" style="color: white;">Deep Candidate <span class="gold">Analytics</span></h2>
+                <p class="subtitle">Know your hire before the call. Candidates arrive pre-screened with Compatibility Scores (0-100).</p>
+                
+                <div class="grid-3">
+                    <div class="stat-card">
+                        <h3 style="color: white;">Fit Score</h3>
+                        <p>AI calculates exact match percentage based on skills vs job requirements.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: white;">Soft Skills</h3>
+                        <p>AI analyzes communication, clarity, and confidence during mock interviews.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: white;">Project History</h3>
+                        <p>Verified GitHub and project links analyzed for code quality and contribution.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 14. Technology -->
+        <div class="slide grid-bg">
+            <div class="container">
+                <span class="slide-tag">INFRASTRUCTURE</span>
+                <h2 class="slide-title">The <span class="gold">Tech Stack</span></h2>
+                <p class="subtitle">Scalable, microservices-ready, and highly responsive architecture.</p>
+                
+                <ul>
+                    <li><strong>Frontend:</strong> Next.js 14, React, Tailwind CSS, TypeScript</li>
+                    <li><strong>Backend:</strong> FastAPI (Python), Motor (Async MongoDB), PostgreSQL</li>
+                    <li><strong>AI Engine:</strong> Proprietary evaluation layer built on top of OpenAI GPT-4 / LLMs</li>
+                    <li><strong>Security:</strong> Enterprise-grade data encryption and JWT authentication.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 15. Market Opportunity -->
+        <div class="slide section-dark">
+            <div class="container">
+                <span class="slide-tag">THE MARKET</span>
+                <h2 class="slide-title" style="color: white;">Market <span class="gold">Opportunity</span></h2>
+                <p class="subtitle">Operating at the massive intersection of EdTech and HRTech.</p>
+                
+                <div class="grid-3">
+                    <div class="stat-card" style="background: transparent; border-color: var(--accent-gold);">
+                        <div style="color: var(--accent-gold); font-size: 3rem; font-weight: 900;">$400B+</div>
+                        <h3 style="color: white; margin-top: 1rem;">TAM</h3>
+                        <p>Global EdTech & HRTech Total Addressable Market</p>
+                    </div>
+                    <div class="stat-card" style="background: transparent; border-color: var(--border-dark);">
+                        <div style="color: white; font-size: 3rem; font-weight: 900;">$45B+</div>
+                        <h3 style="color: white; margin-top: 1rem;">SAM</h3>
+                        <p>Entry-level hiring & university upskilling</p>
+                    </div>
+                    <div class="stat-card" style="background: transparent; border-color: var(--border-dark);">
+                        <div style="color: white; font-size: 3rem; font-weight: 900;">$5B+</div>
+                        <h3 style="color: white; margin-top: 1rem;">SOM</h3>
+                        <p>Tech-focused fresh graduates and SMEs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 16. Competitive Landscape -->
+        <div class="slide grid-bg">
+            <div class="container">
+                <span class="slide-tag">COMPETITIVE LANDSCAPE</span>
+                <h2 class="slide-title">Why We <span class="gold">Win</span></h2>
+                <p class="subtitle">The ONLY platform integrating Learning, Practice, and Hiring in one gamified loop.</p>
+                
+                <div class="grid-2">
+                    <div class="stat-card">
+                        <h3 style="color: #FF4444;">Traditional Job Boards (Indeed)</h3>
+                        <p>High volume, low signal. Massive spam. No built-in upskilling or screening.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: #FF4444;">Professional Networks (LinkedIn)</h3>
+                        <p>Great for networking, but lacks automated technical skill validation.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: #FF4444;">EdTech Platforms (Coursera)</h3>
+                        <p>Great courses, but no direct hiring pipeline or recruiter access.</p>
+                    </div>
+                    <div class="stat-card" style="background: #FFF5D1; border-color: #F5C518;">
+                        <h3 style="color: #000;">KuchKarlo</h3>
+                        <p style="color: #333; font-weight: 600;">Two-Sided Network Effects. Better trained students attract better companies, and vice versa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 17. Business Model -->
+        <div class="slide section-dark">
+            <div class="container">
+                <span class="slide-tag">BUSINESS MODEL</span>
+                <h2 class="slide-title" style="color: white;">Simple. <span class="gold">Affordable.</span></h2>
+                <p class="subtitle">High gross margins (~80%) driven by AI replacing human operations.</p>
+                
+                <div class="grid-3">
+                    <div class="stat-card" style="background: #FFFFFF; color: #111;">
+                        <div style="font-size: 0.75rem; font-weight: 800; color: #888; text-transform: uppercase;">Students: Starter</div>
+                        <h3 style="font-size: 2.5rem; color: #111; margin: 1rem 0;">₹99<span style="font-size: 1rem; color: #888;">/mo</span></h3>
+                        <p style="color: #333;">AI CV Maker, Job Eligibility Test, Personality Test</p>
+                    </div>
+                    
+                    <div class="stat-card" style="background: #1A1A1A; color: #FFF; border: 2px solid var(--accent-gold); position: relative;">
+                        <div style="position: absolute; top: -12px; right: 20px; background: var(--accent-gold); color: #000; font-size: 0.7rem; font-weight: 800; padding: 4px 12px; text-transform: uppercase;">Popular</div>
+                        <div style="font-size: 0.75rem; font-weight: 800; color: var(--accent-gold); text-transform: uppercase;">Students: Pro</div>
+                        <h3 style="font-size: 2.5rem; color: var(--accent-gold); margin: 1rem 0;">₹199<span style="font-size: 1rem; color: #888;">/mo</span></h3>
+                        <p style="color: #CCC;">Unlimited AI Mock Interviews, Priority Job Matching</p>
+                    </div>
+                    
+                    <div class="stat-card" style="background: #1A1A1A; color: #FFF;">
+                        <div style="font-size: 0.75rem; font-weight: 800; color: #888; text-transform: uppercase;">B2B: Companies</div>
+                        <h3 style="font-size: 2.5rem; color: #FFF; margin: 1rem 0;">SaaS</h3>
+                        <p style="color: #CCC;">Pay-per-job post or monthly subscription for unlimited automated AI screening.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 18. Traction -->
+        <div class="slide grid-bg">
+            <div class="container">
+                <span class="slide-tag">TRACTION</span>
+                <h2 class="slide-title">Current <span class="gold">Milestones</span></h2>
+                <p class="subtitle">We have moved fast and are ready to scale.</p>
+                
+                <ul>
+                    <li><strong>Product Built:</strong> Fully functional MVP deployed with student and company dashboards live.</li>
+                    <li><strong>AI Integrated:</strong> Resume parsing, Mock Interviews, and Gamification engine are operational.</li>
+                    <li><strong>Closed Beta:</strong> Initiating pilot programs with select university campuses this quarter.</li>
+                    <li><strong>Initial Feedback:</strong> Overwhelmingly positive response from early recruiter testers regarding time-savings.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 19. Projections -->
+        <div class="slide section-dark">
+            <div class="container">
+                <span class="slide-tag">PROJECTIONS</span>
+                <h2 class="slide-title" style="color: white;">Financial <span class="gold">Roadmap</span></h2>
+                <p class="subtitle">Our 3-Year Horizon.</p>
+                
+                <div class="grid-3">
+                    <div class="stat-card">
+                        <h3 style="color: white; font-size: 2rem;">Year 1</h3>
+                        <p style="color: var(--accent-gold); font-weight: bold; margin-bottom: 1rem;">User Acquisition</p>
+                        <p>Targeting 100k students and 500 SMEs. Offering massive discounts to build liquidity.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: white; font-size: 2rem;">Year 2</h3>
+                        <p style="color: var(--accent-gold); font-weight: bold; margin-bottom: 1rem;">Monetization</p>
+                        <p>Projected ARR $2M through premium B2C subscriptions and B2B SaaS adoption.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: white; font-size: 2rem;">Year 3</h3>
+                        <p style="color: var(--accent-gold); font-weight: bold; margin-bottom: 1rem;">Expansion</p>
+                        <p>Expansion to adjacent verticals (mid-level hiring). Projected ARR $10M+.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 20. The Ask -->
+        <div class="slide grid-bg">
+            <div class="container">
+                <span class="slide-tag">FUNDING</span>
+                <h2 class="slide-title">The Ask & <span class="gold">Use of Funds</span></h2>
+                <div style="font-size: 3rem; font-weight: 900; color: var(--text-dark); margin-bottom: 3rem;">Seeking: $1.5M Seed Round</div>
+                
+                <div class="grid-2">
+                    <div class="stat-card" style="padding: 2.5rem;">
+                        <h3 style="font-size: 3.5rem; color: var(--accent-gold); line-height: 1; margin-bottom: 1rem;">40%</h3>
+                        <p style="font-size: 1.25rem; font-weight: 800; color: var(--text-dark);">Engineering & AI Fine-tuning</p>
+                    </div>
+                    <div class="stat-card" style="padding: 2.5rem;">
+                        <h3 style="font-size: 3.5rem; color: var(--accent-gold); line-height: 1; margin-bottom: 1rem;">30%</h3>
+                        <p style="font-size: 1.25rem; font-weight: 800; color: var(--text-dark);">Sales, Marketing & Partnerships</p>
+                    </div>
+                    <div class="stat-card" style="padding: 2.5rem;">
+                        <h3 style="font-size: 3.5rem; color: var(--accent-gold); line-height: 1; margin-bottom: 1rem;">20%</h3>
+                        <p style="font-size: 1.25rem; font-weight: 800; color: var(--text-dark);">Cloud Infrastructure</p>
+                    </div>
+                    <div class="stat-card" style="padding: 2.5rem;">
+                        <h3 style="font-size: 3.5rem; color: var(--accent-gold); line-height: 1; margin-bottom: 1rem;">10%</h3>
+                        <p style="font-size: 1.25rem; font-weight: 800; color: var(--text-dark);">Working Capital & Legal</p>
+                    </div>
+                </div>
+                <p style="margin-top: 2rem; font-size: 1.2rem; text-align: center; font-weight: 600;">Runway: 18 Months to Series A milestones.</p>
+            </div>
+        </div>
+
+        <!-- 21. The Team -->
+        <div class="slide section-dark">
+            <div class="container text-center">
+                <span class="slide-tag" style="justify-content: center; display: flex;">THE TEAM</span>
+                <h2 class="slide-title" style="color: white;">Founders & <span class="gold">Advisors</span></h2>
+                <p class="subtitle text-center" style="max-width: 900px; margin-bottom: 4rem;">Led by visionary engineers and operators with deep expertise in AI, Full-Stack Development, and Product Management.</p>
+                
+                <div class="grid-2 text-left" style="max-width: 800px; margin: 0 auto;">
+                    <div class="stat-card">
+                        <h3 style="color: white; font-size: 1.5rem;">Strong Technical DNA</h3>
+                        <p>Built complex Next.js, FastAPI, and generative AI architectures from scratch.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: white; font-size: 1.5rem;">Domain Expertise</h3>
+                        <p>Intimate understanding of the struggles faced by university students and recruiters.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 22. Contact -->
+        <div class="slide grid-bg">
+            <div class="container text-center">
+                <h2 class="slide-title hero" style="font-size: 5rem;">Your Next Chapter<br><span class="gold text-outline">Starts Here</span></h2>
+                <p class="subtitle text-center" style="margin-top: 2rem; font-size: 1.5rem;">Students, job seekers, companies — KuchKarlo is built for all of you.</p>
+                
+                <div style="margin-top: 4rem;">
+                    <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">investors@kuchkarlo.com</div>
+                    <div style="font-size: 1.25rem; color: var(--accent-gold); font-weight: bold;">www.kuchkarlo.com</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="controls">
+        <span id="progress-text">1 / 22</span>
+        <button class="btn-nav" id="prevBtn" onclick="prevSlide()">←</button>
+        <button class="btn-nav" id="nextBtn" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const progress = document.getElementById('progress');
+        const progressText = document.getElementById('progress-text');
+        const body = document.body;
+        let currentSlide = 0;
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                if(index === currentSlide) {
+                    slide.classList.add('active');
+                    // Check if slide is dark theme to update controls color
+                    if(slide.classList.contains('section-dark')) {
+                        body.style.backgroundColor = 'var(--bg-dark)';
+                        document.querySelector('.controls').classList.add('section-dark');
+                    } else {
+                        body.style.backgroundColor = 'var(--bg-light)';
+                        document.querySelector('.controls').classList.remove('section-dark');
+                    }
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            
+            // Update progress bar
+            const percent = ((currentSlide + 1) / slides.length) * 100;
+            progress.style.width = percent + '%';
+            progressText.innerText = (currentSlide + 1) + ' / ' + slides.length;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                prevSlide();
+            }
+        });
+
+        // Click to next (if clicking outside a link/button)
+        document.addEventListener('click', (e) => {
+            if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
+                nextSlide();
+            }
+        });
+
+        // Initial setup
+        updateSlides();
+    </script>
+
+</body>
+</html>
