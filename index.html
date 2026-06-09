@@ -153,6 +153,7 @@
         }
         .section-dark .sub-bullet { color: #AAAAAA; }
 
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; width: 100%; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; }
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; width: 100%; }
 
@@ -185,6 +186,12 @@
             justify-content: center;
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
+            overflow: hidden;
+        }
+        .icon-box img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
         }
 
         .controls {
@@ -277,17 +284,17 @@
                 
                 <div class="grid-3">
                     <div class="stat-card">
-                        <div class="icon-box">📉</div>
+                        <div class="icon-box"><img src="icon-skill.png" alt="Skill Icon"></div>
                         <h3>Skill Deficit</h3>
                         <p>Students struggle to identify skill gaps and build relevant resumes for modern tech roles.</p>
                     </div>
                     <div class="stat-card">
-                        <div class="icon-box">😰</div>
+                        <div class="icon-box"><img src="icon-interview.png" alt="Interview Icon"></div>
                         <h3>Interview Anxiety</h3>
                         <p>Lack of practice and realistic environments lead to poor interview performance.</p>
                     </div>
                     <div class="stat-card">
-                        <div class="icon-box">🧭</div>
+                        <div class="icon-box"><img src="icon-roadmap.png" alt="Roadmap Icon"></div>
                         <h3>No Clear Roadmap</h3>
                         <p>Students lack structured milestones from foundation to final placement.</p>
                     </div>
@@ -363,12 +370,12 @@
                 
                 <div class="grid-2">
                     <div class="stat-card">
-                        <div class="icon-box">🎙️</div>
+                        <div class="icon-box"><img src="icon-voice.png" alt="Voice Icon"></div>
                         <h3>Voice & Video Ready</h3>
                         <p>Interact naturally. The AI evaluates tone, confidence, and correctness.</p>
                     </div>
                     <div class="stat-card">
-                        <div class="icon-box">📊</div>
+                        <div class="icon-box"><img src="icon-chart.png" alt="Chart Icon"></div>
                         <h3>Instant Feedback</h3>
                         <p>Receive detailed reports highlighting strengths and exact areas for improvement.</p>
                     </div>
@@ -428,15 +435,15 @@
                 
                 <div class="grid-3 text-left">
                     <div class="stat-card">
-                        <h3 style="color: white; font-size: 2rem;">🎮 XP & Coins</h3>
+                        <h3 style="color: white; font-size: 2rem; display: flex; align-items: center;"><img src="icon-game.png" alt="Game Icon" style="width: 32px; margin-right: 12px;"> XP & Coins</h3>
                         <p>Earn XP and maintain Streaks for completing tasks. Spend coins in the virtual store.</p>
                     </div>
                     <div class="stat-card">
-                        <h3 style="color: white; font-size: 2rem;">🏆 Leaderboards</h3>
+                        <h3 style="color: white; font-size: 2rem; display: flex; align-items: center;"><img src="icon-trophy.png" alt="Trophy Icon" style="width: 32px; margin-right: 12px;"> Leaderboards</h3>
                         <p>Foster healthy competition among peers and universities locally and globally.</p>
                     </div>
                     <div class="stat-card">
-                        <h3 style="color: white; font-size: 2rem;">📈 Signaling</h3>
+                        <h3 style="color: white; font-size: 2rem; display: flex; align-items: center;"><img src="icon-trend.png" alt="Trend Icon" style="width: 32px; margin-right: 12px;"> Signaling</h3>
                         <p>High XP and long streaks signal extreme seriousness and dedication to our recruiters.</p>
                     </div>
                 </div>
@@ -582,14 +589,14 @@
                 
                 <div class="grid-3">
                     <div class="stat-card" style="background: #FFFFFF; color: #111;">
-                        <div style="font-size: 0.75rem; font-weight: 800; color: #888; text-transform: uppercase;">Students: Starter</div>
+                        <div style="font-size: 0.75rem; font-weight: 800; color: #888; text-transform: uppercase;">Job Seeker: Starter</div>
                         <h3 style="font-size: 2.5rem; color: #111; margin: 1rem 0;">₹99<span style="font-size: 1rem; color: #888;">/mo</span></h3>
                         <p style="color: #333;">AI CV Maker, Job Eligibility Test, Personality Test</p>
                     </div>
                     
                     <div class="stat-card" style="background: #1A1A1A; color: #FFF; border: 2px solid var(--accent-gold); position: relative;">
                         <div style="position: absolute; top: -12px; right: 20px; background: var(--accent-gold); color: #000; font-size: 0.7rem; font-weight: 800; padding: 4px 12px; text-transform: uppercase;">Popular</div>
-                        <div style="font-size: 0.75rem; font-weight: 800; color: var(--accent-gold); text-transform: uppercase;">Students: Pro</div>
+                        <div style="font-size: 0.75rem; font-weight: 800; color: var(--accent-gold); text-transform: uppercase;">Job Seeker: Pro</div>
                         <h3 style="font-size: 2.5rem; color: var(--accent-gold); margin: 1rem 0;">₹199<span style="font-size: 1rem; color: #888;">/mo</span></h3>
                         <p style="color: #CCC;">Unlimited AI Mock Interviews, Priority Job Matching</p>
                     </div>
@@ -621,12 +628,12 @@
 
         <!-- 19. Projections -->
         <div class="slide section-dark">
-            <div class="container">
+            <div class="container" style="max-width: 1400px;">
                 <span class="slide-tag">PROJECTIONS</span>
                 <h2 class="slide-title" style="color: white;">Financial <span class="gold">Roadmap</span></h2>
-                <p class="subtitle">Our 3-Year Horizon.</p>
+                <p class="subtitle">Our 4-Year Horizon.</p>
                 
-                <div class="grid-3">
+                <div class="grid-4">
                     <div class="stat-card">
                         <h3 style="color: white; font-size: 2rem;">Year 1</h3>
                         <p style="color: var(--accent-gold); font-weight: bold; margin-bottom: 1rem;">User Acquisition</p>
@@ -641,6 +648,11 @@
                         <h3 style="color: white; font-size: 2rem;">Year 3</h3>
                         <p style="color: var(--accent-gold); font-weight: bold; margin-bottom: 1rem;">Expansion</p>
                         <p>Expansion to adjacent verticals (mid-level hiring). Projected ARR $10M+.</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 style="color: white; font-size: 2rem;">Year 4</h3>
+                        <p style="color: var(--accent-gold); font-weight: bold; margin-bottom: 1rem;">Global Scale</p>
+                        <p>Dominating international tech-hiring markets. Projected ARR $50M+.</p>
                     </div>
                 </div>
             </div>
@@ -702,7 +714,6 @@
                 <p class="subtitle text-center" style="margin-top: 2rem; font-size: 1.5rem;">Students, job seekers, companies — KuchKarlo is built for all of you.</p>
                 
                 <div style="margin-top: 4rem;">
-                    <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">investors@kuchkarlo.com</div>
                     <div style="font-size: 1.25rem; color: var(--accent-gold); font-weight: bold;">www.kuchkarlo.com</div>
                 </div>
             </div>
